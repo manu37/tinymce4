@@ -142,27 +142,15 @@ function tinymce4_config($xh_editor, $config, $selector) {
     $elementFormat = $cf['xhtml']['endtags'] == 'true' ? 'xhtml' : 'html';
     $temp = str_replace('%ELEMENT_FORMAT%', $elementFormat, $temp);
     
-    $_blockFormats = array();
-    for ( $i = $cf['menu']['levels'] + 1; $i <= 6; $i++ ) {
-        $_blockFormats[] = "Header $i=h$i";
-    };
-    
-    $_blockFormats[] = "Paragraph=p";
-    
-    for ( $i=1; $i <= $cf['menu']['levels'];$i++ ) {
-        $_blockFormats [] = sprintf($plugin_tx['tinymce4']['pageheader'],$i) . "=h$i";
-    }
-    $temp = str_replace('%BLOCK_FORMATS%', implode(';',$_blockFormats), $temp);
-    unset($_blockFormats);
 //////////    
     $_named_pageheaders = $_pageheaders = $_headers = array();
     for ( $i = 1; $i <= 6; $i++ ) {
         if ($i <= $cf['menu']['levels']) {
-            $_pageheaders [] = "Head $i=h$i";
+            $_pageheaders [] = "Header $i=h$i";
             $_named_pageheaders [] = sprintf($plugin_tx['tinymce']['pageheader'],$i) . "=h$i";
         }
         else
-            $_headers[] = "Head $i=h$i";
+            $_headers[] = "Header $i=h$i";
     };
     $temp = str_replace('%PAGEHEADERS%', implode(';',$_pageheaders), $temp);
     
