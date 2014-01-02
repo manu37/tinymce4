@@ -158,11 +158,11 @@ function tinymce4_config($xh_editor, $config, $selector) {
     $_named_pageheaders = $_pageheaders = $_headers = array();
     for ( $i = 1; $i <= 6; $i++ ) {
         if ($i <= $cf['menu']['levels']) {
-            $_pageheaders [] = "h$i=h$i";
+            $_pageheaders [] = "Head $i=h$i";
             $_named_pageheaders [] = sprintf($plugin_tx['tinymce']['pageheader'],$i) . "=h$i";
         }
         else
-            $_headers[] = "h$i=h$i";
+            $_headers[] = "Head $i=h$i";
     };
     $temp = str_replace('%PAGEHEADERS%', implode(';',$_pageheaders), $temp);
     
