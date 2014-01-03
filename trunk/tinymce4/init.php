@@ -160,7 +160,15 @@ function tinymce4_config($xh_editor, $config, $selector) {
 
     $temp = str_replace('%SELECTOR%', $xh_editor? 'textarea#text': $selector, $temp);
     
-    $temp = str_replace('"%EDITOR_HEIGHT%"', $cf['editor']['height'], $temp);
+    if ($xh_editor)
+    {
+        $temp = str_replace('%EDITOR_HEIGHT%', $cf['editor']['height'], $temp);
+    }
+    else
+    {
+        $temp = str_replace('%EDITOR_HEIGHT%', '', $temp);
+    }
+
     $temp = str_replace('"%FILEBROWSER_CALLBACK%"', $xh_editor? $_SESSION['tinymce_fb_callback']: '""', $temp);
 
     return $temp;
