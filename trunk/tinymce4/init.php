@@ -88,18 +88,18 @@ function tinymce4_config($xh_editor, $config, $selector) {
 
     $pcf = &$plugin_cf['tinymce4'];
     $ptx = &$plugin_tx['tinymce4'];
+    $pluginPth = $pth['folder']['plugins'] . basename(dirname(__FILE__), "/").'/';
 
     if (!isset($pcf)) {
-	include_once $pth['folder']['plugins'] . 'tinymce4/config/config.php';
+        include_once $pluginPth . 'config/config.php';
     }
 
-    $tiny_mode = isset($plugin_cf['tinymce']['init']) && file_exists($pth['folder']['plugins'] . 'tinymce4/' . 'inits/init_' . $pcf['init'] . '.js') ? $pcf['init'] : 'full';
-    $initFile = $pth['folder']['plugins'] . 'tinymce4/' . 'inits/init_' . $tiny_mode . '.js';
+    $tiny_mode = isset($pcf['init']) && file_exists($pluginPth . 'inits/init_' . $pcf['init'] . '.js') ? $pcf['init'] : 'full';
+    $initFile = $pluginPth . 'inits/init_' . $tiny_mode . '.js';
     if ($config) {
         $initFile = false;
 
         $inits = glob($pth['folder']['plugins'] . 'tinymce4/inits/*.js');
-        //$options = array();
 
         foreach ($inits as $init) {
             $temp = explode('_', basename($init, '.js'));
@@ -107,7 +107,7 @@ function tinymce4_config($xh_editor, $config, $selector) {
             if (isset($temp[1]) && $temp[1] === $config) {
                 $tiny_mode = $config;
                 $isFile = false;
-                $initFile = $pth['folder']['plugins'] . 'tinymce4/' . 'inits/init_' . $tiny_mode . '.js';
+                $initFile = $pluginPth . 'inits/init_' . $tiny_mode . '.js';
                 break;
             }
         }
@@ -123,7 +123,7 @@ function tinymce4_config($xh_editor, $config, $selector) {
      * use english if tiny doesn't know $sl resp. $cf['default']['language']
      */
     $tiny_language = file_exists($pth['folder']['plugins'] . 'tinymce4/' . 'tinymce/langs/' . $sl . '.js')
-	    ? $sl : (file_exists($pth['folder']['plugins'] . 'tinymce4/' . 'tinymce/langs/' . $cf['language']['default'] . '.js')
+	    ? $sl : (file_exists($pluginPth . 'tinymce/langs/' . $cf['language']['default'] . '.js')
 	    ? $cf['language']['default'] : 'en');
 
     /*
@@ -142,12 +142,11 @@ function tinymce4_config($xh_editor, $config, $selector) {
     $elementFormat = $cf['xhtml']['endtags'] == 'true' ? 'xhtml' : 'html';
     $temp = str_replace('%ELEMENT_FORMAT%', $elementFormat, $temp);
     
-//////////    
     $_named_pageheaders = $_pageheaders = $_headers = array();
     for ( $i = 1; $i <= 6; $i++ ) {
         if ($i <= $cf['menu']['levels']) {
             $_pageheaders [] = "Header $i=h$i";
-            $_named_pageheaders [] = sprintf($plugin_tx['tinymce']['pageheader'],$i) . "=h$i";
+            $_named_pageheaders [] = sprintf($ptx['pageheader'],$i) . "=h$i";
         }
         else
             $_headers[] = "Header $i=h$i";
@@ -158,7 +157,7 @@ function tinymce4_config($xh_editor, $config, $selector) {
 
     $temp = str_replace('%NAMED_PAGEHEADERS%', 
         implode(';',($s >= 0 && $s < $cl)? $_named_pageheaders: $_pageheaders), $temp);
-////////////
+
     $temp = str_replace('%SELECTOR%', $xh_editor? 'textarea#text': $selector, $temp);
     
     $temp = str_replace('"%EDITOR_HEIGHT%"', $cf['editor']['height'], $temp);
