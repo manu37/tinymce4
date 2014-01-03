@@ -25,27 +25,43 @@ if (!XH_ADM) {     return; }
 initvar('tinymce4');
 
 if ($tinymce4) {
+    
+    //Helper-functions
+    function tinymce_getInits() {
+        global $pth;
+        $inits = glob($pth['folder']['plugins'] . 'tinymce4/inits/*.js');
+        
+        $options = array();
+        foreach ($inits as $init) {
+            $temp = explode('_', basename($init, '.js'));
+            if (isset($temp[1])) {
+                $options[] = $temp[1];
+            }
+        }
+        return $options;
+    }
+
     initvar('admin');
     initvar('action');
 
-    $o .= print_plugin_admin('off');
-
-    $o .= '<div class="plugintext">';
-    $o .= '<div class="plugineditcaption">TinyMCE for CMSimple_XH</div>';
+    $plugin = basename(dirname(__FILE__), "/");
     
-    !$admin &&
-        $admin = 'plugin_config';
-    !$action &&
-        $action = 'plugin_edit';
-        
-    if ($admin != 'plugin_config') {
-        $o .= plugin_admin_common($action, $admin, $plugin)
-        . '</div>';
-        return;
+    if ($admin == 'plugin_config' || $admin == 'plugin_language') {
+        $o .= print_plugin_admin('on');
+    } else {
+        $o .= print_plugin_admin('off');
     }
-    else {
+    
+    $o .= plugin_admin_common($action, $admin, $plugin);
+
+        
+    if ($admin == '' || $admin == 'plugin_main') {
+        $o .= '<script type="text/javascript" src="' . $pth['folder']['plugins'] . $plugin . '/tinymce/tinymce.min.js"></script>';
+        $tinymce_version = '<script type="text/javascript">document.write(tinymce.majorVersion + " (revision " + tinymce.minorVersion + ")");</script>';
+    
+        $o .= '<h1>TinyMCE for CMSimple_XH</h1>';
         $o .= '<p>Version for @CMSIMPLE_XH_VERSION@</p>';
-        $o .= '<p>TinyMCE version 4.0.10  &ndash; <a href="http://www.tinymce.com/" target="_blank">http://www.tinymce.com/</a>';
+        $o .= '<p>TinyMCE version '.$tinymce_version.'  &ndash; <a href="http://www.tinymce.com/" target="_blank">http://www.tinymce.com/</a>';
         $o .= tag('br');
         $o .= 'Available language packs: cs, da, de, en, et, fr, it, nl, pl, ru, sk tw, zh.</p>';
         $o .= '<p>CMSimple_XH & Filebrowser integration';
@@ -54,64 +70,6 @@ if ($tinymce4) {
         $o .= tag('br');
         $o .= 'from &nbsp;version 1.5.7 &ndash; <a href="http://www.pixolution.ch/" target="_blank">pixolution.ch</a></p>';
         $o .=tag('br');
-
-        include_once $pth['folder']['classes'] . 'FileEdit.php';
-    /**
-     * Editing of tinymce plugin config file.
-     *
-     * @package	XH
-     */
-        class XH_TinyMceConfigFileEdit extends XH_PluginConfigFileEdit
-        {
-    /**
-    * Constructor
-    */
-            function XH_TinyMceConfigFileEdit()
-            {
-                parent::XH_PluginConfigFileEdit();
-            }
-    /**
-    * Controller
-    * @return string output|nothing parsed output or nothing
-    */
-            function edit()
-            {
-                global $action;
-                if ($this->setOptions('init'))
-                {
-                        if ($action!='plugin_save')
-                            return $this->form();
-                        else
-                            return $this->submit();
-                }
-            }
-    /**
-    * Establish option values from ./inits/init_.js files for select field
-    * and affects cfg property
-    * @param $field select field name to set the options for
-    * @global array
-    * @return true if options available
-    */
-            function setOptions($field)
-            {
-                global $pth;
-
-                $inits = glob($pth['folder']['plugins'] . 'tinymce4/inits/*.js');
-                $options = array();
-                foreach ($inits as $init) {
-                        $temp = explode('_', basename($init, '.js'));
-                        if (isset($temp[1])) {
-                                $options[] = $temp[1];
-                        }
-                }
-                (bool) $options &&
-                    $this->cfg[$field]['']['vals'] = $options;
-                return (bool) $options;
-            }
-        }   // End of class XH_TinyMceConfigFileEdit
-
-        $tinymceConfig = new XH_TinyMceConfigFileEdit();
-        $o .= $tinymceConfig->edit();
         $o .= '<h2>Important Notice</h2>
     <p><strong>tinymce4 is optimized for html5 documents. If you want to run it with a html4/xhtml template and have the toolbar styled nicely, add this to your template style definition:</strong></p>
     <p><strong>tinymce4 ist optimiert f&uuml;r html5 Dokumente. F&uuml;r die optimale Anzeige der Toolbar in html4/xhtml Templates , erg&auml;nze bitte den folgenden Code in den Stildefinitionen/stylesheet.css:</strong></p>
@@ -121,9 +79,8 @@ if ($tinymce4) {
      </pre>
      ';
 
-        $o .= '</div>';
     }
 }
 /*
- * EOF tinymce/admin.php
+ * EOF tinymce4/admin.php
  */
