@@ -20,11 +20,17 @@
  */
 /* utf-8 marker: äöü */
 
-if (!XH_ADM) {     return; }
+if (!XH_ADM ) {     return; }
 
 initvar('tinymce4');
 
 if ($tinymce4) {
+    if (!class_exists('XH_CSRFProtection')) {
+        $o.= XH_message('fail','needs CMSimple_XH Version 1.6 or higher!');
+        return;
+    }
+
+    define('TINYMCE4CMSIMPLE_VERSION', '1.0 - 2014-01-08');
     
     //Helper-functions
     function tinymce_getInits() {
@@ -60,7 +66,8 @@ if ($tinymce4) {
         $tinymce_version = '<script type="text/javascript">document.write(tinymce.majorVersion + " (revision " + tinymce.minorVersion + ")");</script>';
     
         $o .= '<h1>TinyMCE for CMSimple_XH</h1>';
-        $o .= '<p>Version for @CMSIMPLE_XH_VERSION@</p>';
+        $o .= '<p>Version for '.CMSIMPLE_XH_VERSION.'</p>';
+        $o .= '<p>Plugin version '.TINYMCE4CMSIMPLE_VERSION;
         $o .= '<p>TinyMCE version '.$tinymce_version.'  &ndash; <a href="http://www.tinymce.com/" target="_blank">http://www.tinymce.com/</a>';
         $o .= tag('br');
         $o .= 'Available language packs: cs, da, de, en, et, fr, it, nl, pl, ru, sk tw, zh.</p>';
