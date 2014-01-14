@@ -2,7 +2,6 @@
   selector: "%SELECTOR%",
   theme: "modern",
   menubar:false,
-  height: "%EDITOR_HEIGHT%",
   plugins: [
   "autolink autosave contextmenu fullscreen",
   "image link lists nonbreaking",
