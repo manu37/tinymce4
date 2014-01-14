@@ -1,7 +1,6 @@
 {
   selector: "%SELECTOR%",
   theme: "modern",
-  height: "%EDITOR_HEIGHT%",
   plugins: [
     "advlist anchor autolink autosave charmap code contextmenu emoticons fullscreen hr",
     "image importcss insertdatetime link lists media nonbreaking paste",

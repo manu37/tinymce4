@@ -3,7 +3,6 @@
   theme: "modern",
   skin: "lightgray",
   toolbar_items_size: "small",
-  height: "%EDITOR_HEIGHT%",
   menubar:false,
   plugins: [
     "advlist anchor autolink autosave charmap code contextmenu emoticons fullscreen hr",
