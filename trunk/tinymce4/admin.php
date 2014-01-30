@@ -30,8 +30,6 @@ if ($tinymce4) {
         return;
     }
 
-    define('TINYMCE4CMSIMPLE_VERSION', '1.0 - 2014-01-08');
-    
     //Helper-functions
     function tinymce_getInits() {
         global $pth;
@@ -67,8 +65,14 @@ if ($tinymce4) {
     
         $o .= '<h1>TinyMCE for CMSimple_XH</h1>';
         $o .= '<p>Version for '.CMSIMPLE_XH_VERSION.'</p>';
-        $o .= '<p>Plugin version '.TINYMCE4CMSIMPLE_VERSION;
-        $o .= '<p>TinyMCE version '.$tinymce_version.'  &ndash; <a href="http://www.tinymce.com/" target="_blank">http://www.tinymce.com/</a>';
+        $o .= '<p>Plugin version '.TINYMCE4CMSIMPLE_VERSION.'</p>';
+        $o .= '<p>TinyMCE ';
+        $o .= TINYMCE4_VARIANT == 'CDN'? 'Content delivery network (CDN) ': '';
+        $o .= 'version '.$tinymce_version.'  &ndash; <a href="http://www.tinymce.com/" target="_blank">www.tinymce.com/</a>';
+        if ( TINYMCE4_VARIANT == 'CDN' ) {
+            $o .= tag('br');
+            $o .= 'hosted by <a href="http://www.cachefly.com//" target="_blank">http://www.cachefly.com/</a>';
+        }
         $o .= tag('br');
         $o .= 'Available language packs: cs, da, de, en, et, fr, it, nl, pl, ru, sk tw, zh.</p>';
         $o .= '<p>CMSimple_XH & Filebrowser integration';

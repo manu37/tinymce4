@@ -2,6 +2,7 @@
 
 // utf-8-marker: äöüß
 if (!defined('XH_ADM')) define('XH_ADM', $adm); 
+
 /**
  * Returns the JS to activate the configured filebrowser.
  *
@@ -51,7 +52,14 @@ function include_tinymce4() {
 
     if ($again) {return;}
     $again = TRUE;
-
+    
+    if ( TINYMCE4_VARIANT == 'CDN' ) {
+        $tiny_src = $plugin_cf['tinymce4']['CDN_src'];
+    } 
+    else {
+        $tiny_src = $pth['folder']['plugins'] . 'tinymce4/' . 'tinymce/tinymce.min.js';
+    }
+    
     if (XH_ADM && $edit) {
         include_once $pth['folder']['plugins'] . 'tinymce4/' . 'links.php';
         $imageList = 'myImageList = '.get_images($pth['folder']['images']).';';
@@ -61,7 +69,9 @@ function include_tinymce4() {
     }
     
     $hjs .='
-        <script language="javascript" type="text/javascript" src="' . $pth['folder']['plugins'] . 'tinymce4/' . 'tinymce/tinymce.min.js"></script>
+        <script language="javascript" type="text/javascript" src="'. 
+        $tiny_src. 
+        '"></script>
 	<script type="text/javascript">
 	/* <![CDATA[ */
 	' . tinymce4_filebrowser() . '
@@ -88,7 +98,8 @@ function tinymce4_config($xh_editor, $config, $selector) {
 
     $pcf = &$plugin_cf['tinymce4'];
     $ptx = &$plugin_tx['tinymce4'];
-    $pluginPth = $pth['folder']['plugins'] . basename(dirname(__FILE__), "/").'/';
+    $pluginName = basename(dirname(__FILE__), "/");
+    $pluginPth = $pth['folder']['plugins'] . $pluginName . '/';
 
     if (!isset($pcf)) {
         include_once $pluginPth . 'config/config.php';
@@ -99,7 +110,7 @@ function tinymce4_config($xh_editor, $config, $selector) {
     if ($config) {
         $initFile = false;
 
-        $inits = glob($pth['folder']['plugins'] . 'tinymce4/inits/*.js');
+        $inits = glob($pluginPth.'inits/*.js');
 
         foreach ($inits as $init) {
             $temp = explode('_', basename($init, '.js'));
@@ -122,7 +133,7 @@ function tinymce4_config($xh_editor, $config, $selector) {
     /*
      * use english if tiny doesn't know $sl resp. $cf['default']['language']
      */
-    $tiny_language = file_exists($pth['folder']['plugins'] . 'tinymce4/' . 'tinymce/langs/' . $sl . '.js')
+    $tiny_language = file_exists($pluginPth . 'tinymce/langs/' . $sl . '.js')
 	    ? $sl : (file_exists($pluginPth . 'tinymce/langs/' . $cf['language']['default'] . '.js')
 	    ? $cf['language']['default'] : 'en');
 
@@ -137,7 +148,7 @@ function tinymce4_config($xh_editor, $config, $selector) {
 
     $temp = str_replace('%STYLESHEET%', $pth['folder']['template'] . 'stylesheet.css', $temp);
 
-    $temp = str_replace('%LANGUAGE%', $tiny_language, $temp);
+    $temp = str_replace('%LANGUAGE%', $tiny_language !='en'? 'language_url: "'.CMSIMPLE_ROOT.'plugins/tinymce4/tinymce/langs/'.$tiny_language.'.js",': 'language: "en",', $temp);
 
     $elementFormat = $cf['xhtml']['endtags'] == 'true' ? 'xhtml' : 'html';
     $temp = str_replace('%ELEMENT_FORMAT%', $elementFormat, $temp);
