@@ -60,10 +60,16 @@ if ($tinymce4) {
 
         
     if ($admin == '' || $admin == 'plugin_main') {
-        $o .= '<script type="text/javascript" src="' . $pth['folder']['plugins'] . $plugin . '/tinymce/tinymce.min.js"></script>';
+        if ( TINYMCE4_VARIANT == 'CDN' ) {
+            $tiny_src = $plugin_cf['tinymce4']['CDN_src'];
+        } 
+        else {
+            $tiny_src = $pth['folder']['plugins'] . 'tinymce4/' . 'tinymce/tinymce.min.js';
+        }
+        $o .= '<script type="text/javascript" src="' . $tiny_src . '"></script>';
         $tinymce_version = '<script type="text/javascript">document.write(tinymce.majorVersion + " (revision " + tinymce.minorVersion + ")");</script>';
     
-        $o .= '<h1>TinyMCE for CMSimple_XH</h1>';
+        $o .= '<h1>TinyMCE4 for CMSimple_XH</h1>';
         $o .= '<p>Version for '.CMSIMPLE_XH_VERSION.'</p>';
         $o .= '<p>Plugin version '.TINYMCE4CMSIMPLE_VERSION.'</p>';
         $o .= '<p>TinyMCE ';
