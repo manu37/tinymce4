@@ -18,7 +18,7 @@
  */
 /* utf-8 marker: הצü */
 
-define('TINYMCE4CMSIMPLE_VERSION', '1.2 - 2014-02-18');
+define('TINYMCE4CMSIMPLE_VERSION', '1.2.1 - 2014-04-11');
     
 define('TINYMCE4_VARIANT','');  //TinyMCE4 fully installed
 //define('TINYMCE4_VARIANT','CDN');  //TinyMCE4 externally loaded
