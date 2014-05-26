@@ -78,7 +78,7 @@ if ($tinymce4) {
     
         $o .= '<h1>TinyMCE4 for CMSimple_XH</h1>';
         $o .= '<p>Version for '.CMSIMPLE_XH_VERSION.'</p>';
-        $o .= '<p>Plugin version '.TINYMCE4CMSIMPLE_VERSION.'</p>';
+        $o .= '<p>Plugin version '.XH_pluginVersion( $plugin  ).'</p>';
         $o .= '<p>TinyMCE ';
         $o .= TINYMCE4_VARIANT == 'CDN'? 'Content delivery network (CDN) ': '';
         $o .= 'version '.$tinymce_version.'  &ndash; <a href="http://www.tinymce.com/" target="_blank">www.tinymce.com/</a>';
