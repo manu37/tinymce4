@@ -11,8 +11,6 @@
  * @copyright	1999-2009 <http://cmsimple.org/>
  * @copyright	2009-2012 The CMSimple_XH developers <http://cmsimple-xh.org/?The_Team>
  * @license	http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @version	@CMSIMPLE_XH_VERSION@, @CMSIMPLE_XH_BUILD@
- * @version $Id: admin.php 434 2013-01-12 17:44:30Z manu37 $
  * @link	http://cmsimple-xh.org/
  * @since      File available since Release 1.6.0
  * @author     manu <http://www.pixolution.ch/>
