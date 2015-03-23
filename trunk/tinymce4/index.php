@@ -16,7 +16,27 @@
  * @author     manu <http://www.pixolution.ch/>
  *
  */
-/* utf-8 marker: הצü */
+ 
+ /*
+ * Prevent direct access and usage from unsupported CMSimple_XH versions.
+ */
+
+if ( CMSIMPLE_XH_VERSION === '@CMSIMPLE_XH_VERSION@' ) goto start;
+
+if (!defined('CMSIMPLE_XH_VERSION')
+    || strpos(CMSIMPLE_XH_VERSION, 'CMSimple_XH') !== 0
+    || version_compare(CMSIMPLE_XH_VERSION, 'CMSimple_XH 1.6.6', 'lt')
+) {
+    header('HTTP/1.1 403 Forbidden');
+    header('Content-Type: text/plain; charset=UTF-8');
+    die(<<<EOT
+$plugin detected an unsupported CMSimple_XH version.
+Uninstall encmail_XH or upgrade to a supported CMSimple_XH version!
+EOT
+    );
+}
+
+start:
 
 define('TINYMCE4_VARIANT','');  //TinyMCE4 fully installed
 //define('TINYMCE4_VARIANT','CDN');  //TinyMCE4 externally loaded
