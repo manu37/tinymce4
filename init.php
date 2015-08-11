@@ -1,48 +1,80 @@
 <?php
 
-// utf-8-marker: äöüß
-if (!defined('XH_ADM')) define('XH_ADM', $adm); 
+/**
+ * Editor Init Functions -- init.php
+ *
+ * PHP version 5
+ *
+ * @category  CMSimple_XH
+ * @package   Tinymce4
+ * @author    The CMSimple_XH developers <devs@cmsimple-xh.org>
+ * @copyright 2009-2015 The CMSimple_XH developers <http://cmsimple-xh.org/?The_Team>
+ * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
+ * @link      http://cmsimple-xh.org/
+ */
+
+ /**
+ * defines admin mode
+ */
+if (!defined('XH_ADM')) {
+    define('XH_ADM', $adm);
+}
 
 /**
  * Returns the JS to activate the configured filebrowser.
  *
- * @return void
+ * @return string filebrowser script
  */
-    function tinymce4_filebrowser() {
-        global $cf, $edit;
+function tinymce4_filebrowser()
+{
+    global $cf, $edit;
 
-        if (!(XH_ADM && $edit)) { return ''; }  // no filebrowser, if editor is called from front-end
+    if (!(XH_ADM && $edit)) {   // no filebrowser, if editor is called from front-end
+        return '';
+    }
 
-        $url = '';
-        $script = ''; //holds the code of the callback-function
+    $url = '';
+    $script = ''; //holds the code of the callback-function
 
-        //Einbindung alternativer Filebrowser, gesteuert über $cf['filebrowser']['external']
-        //und den Namen des aufrufenden Editors
-        if ($cf['filebrowser']['external'] != FALSE) {
-            $fbConnector = CMSIMPLE_BASE . 'plugins/' . $cf['filebrowser']['external'] . '/connectors/tinymce4/tinymce4.php';
-            if (is_readable($fbConnector)) {
-                include_once($fbConnector);
-                $init_function = $cf['filebrowser']['external'] . '_tinymce4_init';
-                if (function_exists($init_function)) {
-                    $script = $init_function();
-                    return $script;
-                }
+    /** 
+     * Einbindung alternativer Filebrowser, gesteuert über 
+     * $cf['filebrowser']['external'] und den Namen des aufrufenden Editors.
+     */
+    if ($cf['filebrowser']['external'] != false) {
+        $fbConnector = CMSIMPLE_BASE . 'plugins/' . 
+            $cf['filebrowser']['external'] . 
+            '/connectors/tinymce4/tinymce4.php';
+        if (is_readable($fbConnector)) {
+            include_once $fbConnector;
+            $init_function = $cf['filebrowser']['external'] . '_tinymce4_init';
+            if (function_exists($init_function)) {
+                $script = $init_function();
+                return $script;
             }
         }
-
-        //default filebrowser
-        $_SESSION['tinymce_fb_callback'] = 'wrFilebrowser';
-        if (CMSIMPLE_XH_VERSION != '@CMSIMPLE_XH_VERSION@' && version_compare(CMSIMPLE_XH_VERSION, 'CMSimple_XH 1.7', 'lt')) { //principle occurance of XH_VERSION is checked in index.php
-            $url =  CMSIMPLE_ROOT . 'plugins/filebrowser/editorbrowser.php?editor=tinymce4&prefix=' . CMSIMPLE_BASE . '&base=./';
-        } 
-        else {  // CMSimple_XH v1.7 (r1518)
-            $url =  CMSIMPLE_ROOT . '?filebrowser=editorbrowser&editor=tinymce4&prefix=' . CMSIMPLE_BASE;           
-        }
-        
-        $script = file_get_contents(dirname(__FILE__) . '/filebrowser.js');
-        $script = str_replace('%URL%',  $url, $script);
-        return $script;
     }
+
+    //default filebrowser
+    $_SESSION['tinymce_fb_callback'] = 'wrFilebrowser';
+    
+    //principle occurance of XH_VERSION is checked in index.php
+    if (CMSIMPLE_XH_VERSION != '@CMSIMPLE_XH_VERSION@'
+        && version_compare(CMSIMPLE_XH_VERSION, 'CMSimple_XH 1.7', 'lt')
+    ) { 
+        $url =  CMSIMPLE_ROOT . 
+            'plugins/filebrowser/editorbrowser.php?editor=tinymce4&prefix=' . 
+            CMSIMPLE_BASE . 
+            '&base=./';
+    } else {  // CMSimple_XH v1.7 (r1518)
+        $url =  CMSIMPLE_ROOT . 
+            '?filebrowser=editorbrowser&editor=tinymce4&prefix=' . 
+            CMSIMPLE_BASE;           
+    }
+    
+    $script = file_get_contents(dirname(__FILE__) . '/filebrowser.js');
+    $script = str_replace('%URL%',  $url, $script);
+    return $script;
+}
 
 /**
  * Writes the basic JS of the editor to $hjs. No editors are actually created.
@@ -52,24 +84,32 @@ if (!defined('XH_ADM')) define('XH_ADM', $adm);
  * @global string $hjs
  * @return void
  */
-function include_tinymce4() {
-    global $edit, $pth, $h, $u, $l, $sn, $hjs, $plugin_cf;
-    static $again = FALSE;
+function include_tinymce4() 
+{
+    global $edit, $pth, $h, $u, $l, $hjs, $plugin_cf;
+    static $again = false;
 
-    if ($again) {return;}
-    $again = TRUE;
+    if ($again) {
+        return;
+    }
+    $again = true;
     
-    if ( TINYMCE4_VARIANT == 'CDN' ) {
+    if (TINYMCE4_VARIANT == 'CDN') {
         $tiny_src = $plugin_cf['tinymce4']['CDN_src'];
-    } 
-    else {
-        $tiny_src = $pth['folder']['plugins'] . 'tinymce4/' . 'tinymce/tinymce.min.js';
+    } else {
+        $tiny_src = $pth['folder']['plugins'] . 
+            'tinymce4/' . 
+            'tinymce/tinymce.min.js';
     }
     
     if (XH_ADM && $edit) {
         include_once $pth['folder']['plugins'] . 'tinymce4/' . 'links.php';
-        $imageList = 'myImageList = '.get_images($pth['folder']['images']).';';
-        $linkList = 'var myLinkList = '.get_internal_links($h, $u, $l, $sn, $pth['folder']['downloads']).';';
+        $imageList = 'myImageList = ' .
+            get_images($pth['folder']['images']) .
+            ';';
+        $linkList = 'var myLinkList = ' .
+            get_internal_links($h, $u, $l, $pth['folder']['downloads']) .
+            ';';
     } else {
         $imageList = $linkList = '';
     }
@@ -97,10 +137,15 @@ function include_tinymce4() {
 /**
  * Returns the config object.
  *
- * @return string
+ * @param string $xh_editor editor URL.
+ * @param string $config    manual config string.
+ * @param string $selector  manual manual editor DOM node.
+ *
+ * @return string editor config
  */
-function tinymce4_config($xh_editor, $config, $selector) {
-    global $cl, $edit, $e, $pth, $sl, $sn, $cf, $plugin_cf, $plugin_tx, $s;
+function tinymce4_config($xh_editor, $config, $selector)
+{
+    global $cl, $pth, $sl, $cf, $plugin_cf, $plugin_tx, $s;
 
     $pcf = &$plugin_cf['tinymce4'];
     $ptx = &$plugin_tx['tinymce4'];
@@ -111,7 +156,11 @@ function tinymce4_config($xh_editor, $config, $selector) {
         include_once $pluginPth . 'config/config.php';
     }
 
-    $tiny_mode = isset($pcf['init']) && file_exists($pluginPth . 'inits/init_' . $pcf['init'] . '.js') ? $pcf['init'] : 'full';
+    $tiny_mode
+        = isset($pcf['init']) 
+            && file_exists($pluginPth . 'inits/init_' . $pcf['init'] . '.js') ?
+            $pcf['init'] : 
+            'full';
     $initFile = $pluginPth . 'inits/init_' . $tiny_mode . '.js';
     if ($config) {
         $initFile = false;
@@ -123,7 +172,6 @@ function tinymce4_config($xh_editor, $config, $selector) {
 
             if (isset($temp[1]) && $temp[1] === $config) {
                 $tiny_mode = $config;
-                $isFile = false;
                 $initFile = $pluginPth . 'inits/init_' . $tiny_mode . '.js';
                 break;
             }
@@ -139,9 +187,17 @@ function tinymce4_config($xh_editor, $config, $selector) {
     /*
      * use english if tiny doesn't know $sl resp. $cf['default']['language']
      */
-    $tiny_language = file_exists($pluginPth . 'tinymce/langs/' . $sl . '.js')
-	    ? $sl : (file_exists($pluginPth . 'tinymce/langs/' . $cf['language']['default'] . '.js')
-	    ? $cf['language']['default'] : 'en');
+     
+    if (file_exists($pluginPth . 'tinymce/langs/' . $sl . '.js')) {
+        $tiny_language = $sl;
+    } elseif (file_exists(
+        $pluginPth . 'tinymce/langs/' . 
+        $cf['language']['default'] .  '.js'
+    )) {
+        $tiny_language = $cf['language']['default'];
+    } else {
+        $tiny_language = 'en';
+    }
 
     /*
      * The styles of this sheet will be used inside the editor.
@@ -152,9 +208,18 @@ function tinymce4_config($xh_editor, $config, $selector) {
      * you might want to create a special editor.css.
      */
 
-    $temp = str_replace('%STYLESHEET%', $pth['folder']['template'] . 'stylesheet.css', $temp);
+    $temp  = str_replace(
+        '%STYLESHEET%', $pth['folder']['template'] . 
+        'stylesheet.css', $temp
+    );
 
-    $temp = str_replace('%LANGUAGE%', $tiny_language !='en'? 'language_url: "'.CMSIMPLE_ROOT.'plugins/tinymce4/tinymce/langs/'.$tiny_language.'.js",': 'language: "en",', $temp);
+    $temp = str_replace(
+        '%LANGUAGE%', $tiny_language !='en' ? 
+        'language_url: "' . 
+        CMSIMPLE_ROOT.'plugins/tinymce4/tinymce/langs/' . 
+        $tiny_language.'.js",' : 
+        'language: "en",', $temp
+    );
 
     $elementFormat = $cf['xhtml']['endtags'] == 'true' ? 'xhtml' : 'html';
     $temp = str_replace('%ELEMENT_FORMAT%', $elementFormat, $temp);
@@ -163,44 +228,63 @@ function tinymce4_config($xh_editor, $config, $selector) {
     for ( $i = 1; $i <= 6; $i++ ) {
         if ($i <= $cf['menu']['levels']) {
             $_pageheaders [] = "Header $i=h$i";
-            $_named_pageheaders [] = sprintf($ptx['pageheader'],$i) . "=h$i";
-        }
-        else
+            $_named_pageheaders [] = sprintf($ptx['pageheader'], $i) . "=h$i";
+        } else {
             $_headers[] = "Header $i=h$i";
+            
+        }
     };
-    $temp = str_replace('%PAGEHEADERS%', implode(';',$_pageheaders), $temp);
+    $temp = str_replace('%PAGEHEADERS%', implode(';', $_pageheaders), $temp);
     
-    $temp = str_replace('%HEADERS%', implode(';',$_headers), $temp);
+    $temp = str_replace('%HEADERS%', implode(';', $_headers), $temp);
 
-    $temp = str_replace('%NAMED_PAGEHEADERS%', 
-        implode(';',($s >= 0 && $s < $cl)? $_named_pageheaders: $_pageheaders), $temp);
+    $temp = str_replace(
+        '%NAMED_PAGEHEADERS%', 
+        implode(
+            ';', 
+            ($s >= 0 && $s < $cl) ? 
+            $_named_pageheaders : 
+            $_pageheaders
+        ), $temp
+    );
 
     $temp = str_replace('%SELECTOR%', $xh_editor? 'textarea#text': $selector, $temp);
     
-    $temp = str_replace('"%FILEBROWSER_CALLBACK%"', $xh_editor? $_SESSION['tinymce_fb_callback']: '""', $temp);
+    $temp = str_replace(
+        '"%FILEBROWSER_CALLBACK%"', 
+        $xh_editor ? 
+        $_SESSION['tinymce_fb_callback'] : 
+        '""', 
+        $temp
+    );
 
     return $temp;
 }
 
 
 /**
- * Returns the JS to actually instantiate a single editor on the textarea given by $element_id.
- * $config can be 'full', 'medium', 'minimal', 'sidebar' or '' (which will use the users default configuration).
- * Other values are editor dependent. Typically this will be a string in JSON format enclosed in { },
+ * Returns the JS to actually instantiate a single editor on the textarea 
+ * given by $element_id. $config can be 'full', 'medium', 'minimal', 'sidebar' 
+ * or '' (which will use the users default configuration). Other values are editor 
+ * dependent. Typically this will be a string in JSON format enclosed in { },
  * that can contain %PLACEHOLDER%s, that will be substituted.
  *
- * To actually create the editor, the caller has to write the the return value to the (X)HTML output,
- * properly enclosed as <script>, after the according <textarea>, or execute the return value by other means.
+ * To actually create the editor, the caller has to write the the return value 
+ * to the (X)HTML output, properly enclosed as <script>, after the according 
+ * <textarea>, or execute the return value by other means.
  *
- * @param string $element_id  The id of the textarea that should become an editor instance.
- * @param string $config  The configuration string.
+ * @param string $elementID The id of the textarea that should become an 
+ *                          editor instance.
+ * @param string $config    The configuration string.
+ *
  * @return string  The JS to actually create the editor.
  */
- function tinymce4_replace($elementID = false, $config = '') {
-    if(!$elementID){
+function tinymce4_replace($elementID = false, $config = '') 
+{
+    if (!$elementID) {
         return '';
     }
-    $config = tinymce4_config(FALSE, $config, '#' . $elementID);
+    $config = tinymce4_config(false, $config, '#' . $elementID);
    
     return _setInit($config);
 }
@@ -210,11 +294,15 @@ function tinymce4_config($xh_editor, $config, $selector) {
  * Instantiates the editor(s) on the textarea(s) given by $element_classes.
  * $config is exactly the same as for EDITOR_replace().
  *
- * @param string $element_classes  The classes of the textarea(s) that should become an editor instance. An empty array means .xh-editor.
+ * @param string $classes The element classes of the textarea(s) that should
+ *                        become an editor instance.
+ *                        An empty array means .xh-editor.
  * @param string $config  The configuration string.
+ *
  * @return void
  */
- function init_tinymce4($classes = array(), $config = false) {
+function init_tinymce4($classes = array(), $config = false) 
+{
     global $hjs;
 
     include_tinymce4();
@@ -235,18 +323,29 @@ function tinymce4_config($xh_editor, $config, $selector) {
     return;
 }
 
-function _setInit($config) {
+
+/**
+ * Helper sequence to set the init JS string correctly.
+ *
+ * @param string $config The configuration string.
+ *
+ * @return string the whole editor js string
+ */
+function _setInit($config) 
+{
     static $run = 0;
-    $js = str_replace('tinyArgs','tinyArgs'.$run,'
-    var tinyArgs = ' . $config . ';
-    if (myImageList && myImageList.length > 0 ) 
-        tinyArgs.image_list = myImageList;
-    else
-        delete tinyArgs.image_list;
-    if (myLinkList) 
-        tinyArgs.link_list = myLinkList;
-    tinymce.init(tinyArgs);
-    ');
+    $js = str_replace(
+        'tinyArgs', 'tinyArgs'.$run, '
+        var tinyArgs = ' . $config . ';
+        if (myImageList && myImageList.length > 0 ) 
+            tinyArgs.image_list = myImageList;
+        else
+            delete tinyArgs.image_list;
+        if (myLinkList) 
+            tinyArgs.link_list = myLinkList;
+        tinymce.init(tinyArgs);
+        '
+    );
     $run++;
     return $js;
 }
