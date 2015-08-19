@@ -145,6 +145,62 @@ if ($tinymce4) {
 
     }
 }
+
+
+if (isset($_GET['filebrowser']) && $_GET['filebrowser'] == 'imageuploader') {
+    ImageUploader_forEditor();
+    exit;
+}
+
+/**
+ * Handles the editorbrowser.
+ *
+ * @return void
+ *
+ * @global array                  The paths of system files and folders.
+ * @global XH\CSRFProtection      The CSRF protector.
+ * @global Filebrowser_Controller The filebrowser controller.
+ */
+function ImageUploader_forEditor()
+{
+    global $cf;
+    
+    $imgUploader = new Tinymce4\Uploader();
+    $imgUploader->setBrowseBase(CMSIMPLE_BASE);
+    $imgUploader->setMaxFileSize('images', $cf['images']['maxsize']);
+
+    $imgUploader->linkType = 'images';
+
+    $imgUploader->baseDirectory
+        = $imgUploader->baseDirectories['userfiles'];
+    $imgUploader->currentDirectory
+        = $imgUploader->baseDirectories['images'];
+
+    if (isset($_GET['subdir'])) {
+        $subdir = str_replace(
+            array('../', './', '?', '<', '>', ':'), '', $_GET['subdir']
+        );
+
+        if (strpos($subdir, $imgUploader->baseDirectory) === 0) {
+            $imgUploader->currentDirectory = rtrim($subdir, '/') . '/';
+        }
+    }
+    $imgUploader->determineCurrentType();
+
+
+    reset ($_FILES);
+    if ($imgUploader->uploadFile(current($_FILES))) {
+         echo json_encode(array('location' => $imgUploader->fileWritten));      
+    } else {
+        foreach ($imgUploader->errMsg as $key => $val) {
+            XH_logMessage( 'error', 'uploadFile', 'tinymce4', $key . ': ' . $val);
+        }
+        // Notify editor that the upload failed
+        header("HTTP/1.0 500 Server Error");
+    }
+}
+
+
 /*
  * EOF tinymce4/admin.php
  */

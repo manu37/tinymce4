@@ -11,6 +11,7 @@
   ],
   toolbar1: "save | fullscreen | bold italic underline | formatselect styleselect | bullist numlist | image link unlink",
   image_advtab: true,
+  image_title: true,
   file_browser_callback : "%FILEBROWSER_CALLBACK%",
   content_css: "%STYLESHEET%",
   importcss_append:true,

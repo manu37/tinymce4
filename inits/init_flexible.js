@@ -11,6 +11,7 @@
   ],
   toolbar: "save | fullscreen | code | formatselect | fontselect | fontsizeselect | styleselect | bold | italic | underline | strikethrough | alignleft |aligncenter | alignright | alignjustify | cut | copy | paste | pastetext | bullist | numlist | outdent | indent | blockquote | undo | redo | link | unlink |anchor | image | media | hr | nonbreaking | removeformat | visualblocks | visualchars | forecolor | backcolor | searchreplace | charmap | emoticons | subscript | superscript | table | inserttime",
   image_advtab: true,
+  image_title: true,
   file_browser_callback : "%FILEBROWSER_CALLBACK%",
   content_css: "%STYLESHEET%",
   importcss_append:true,

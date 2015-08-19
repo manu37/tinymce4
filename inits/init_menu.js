@@ -15,6 +15,7 @@
     {"title":"Table", "items":"inserttable tableprops | cell row column"}
   ],
   image_advtab: true,
+  image_title: true,
   file_browser_callback : "%FILEBROWSER_CALLBACK%",
   content_css: "%STYLESHEET%",
   importcss_append:true,
