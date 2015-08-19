@@ -14,6 +14,7 @@
   toolbar3: "undo redo | link unlink anchor image media | hr nonbreaking removeformat visualblocks visualchars | forecolor backcolor | searchreplace | charmap",
   toolbar4: "emoticons subscript superscript | table inserttime help",
   image_advtab: true,
+  image_title: true,
   file_browser_callback: "%FILEBROWSER_CALLBACK%",
   content_css: "%STYLESHEET%",
   importcss_append:true,

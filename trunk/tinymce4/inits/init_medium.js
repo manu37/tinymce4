@@ -12,6 +12,7 @@
   toolbar1: "save | fullscreen code formatselect fontselect fontsizeselect styleselect | image link unlink",
   toolbar2: "bold italic | alignleft aligncenter alignright alignjustify outdent indent blockquote hr removeformat | bullist numlist | charmap | table",
   image_advtab: true,
+  image_title: true,
   file_browser_callback : "%FILEBROWSER_CALLBACK%",
   content_css: "%STYLESHEET%",
   importcss_append:true,
