@@ -28,8 +28,9 @@
   relative_urls: true,
   convert_urls: false,
   entity_encoding: "raw",
-  images_upload_url : "/cmsimpleDEV/?filebrowser=imageuploader&editor=tinymce4",
-  images_upload_base_path :"",
+  paste_data_images: true,
+  images_upload_url : "./?filebrowser=imageuploader&editor=tinymce4",
+//  images_upload_base_path :"",
   images_upload_credentials: true,
   save_onsavecallback: function() {
     var editor = tinymce.activeEditor;
