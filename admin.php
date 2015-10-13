@@ -190,7 +190,9 @@ function ImageUploader_forEditor()
 
     reset ($_FILES);
     if ($imgUploader->uploadFile(current($_FILES))) {
-         echo json_encode(array('location' => $imgUploader->fileWritten));      
+         echo json_encode(array('location' => $imgUploader->fileWritten));
+//         XH_logMessage( 'info', 'uploadFile', 'tinymce4', 'fileWritten: ' . $imgUploader->fileWritten);
+      
     } else {
         foreach ($imgUploader->errMsg as $key => $val) {
             XH_logMessage( 'error', 'uploadFile', 'tinymce4', $key . ': ' . $val);

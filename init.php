@@ -215,10 +215,12 @@ function tinymce4_config($xh_editor, $config, $selector)
 
     $temp = str_replace(
         '%LANGUAGE%', $tiny_language !='en' ? 
-        'language_url: "' . 
-        CMSIMPLE_ROOT.'plugins/tinymce4/tinymce/langs/' . 
-        $tiny_language.'.js",' : 
-        'language: "en",', $temp
+            TINYMCE4_VARIANT == 'CDN' ?
+                'language_url: "' . 
+                CMSIMPLE_ROOT.'plugins/tinymce4/tinymce/langs/' . 
+                $tiny_language.'.js",'
+            :   'language: "' . $tiny_language .'",' 
+        :   'language: "en",', $temp
     );
 
     $elementFormat = $cf['xhtml']['endtags'] == 'true' ? 'xhtml' : 'html';

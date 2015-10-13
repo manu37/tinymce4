@@ -2,7 +2,7 @@
   selector: "%SELECTOR%",
   theme: "modern",
   plugins: [
-    "advlist anchor autolink autosave charmap code contextmenu emoticons fullscreen hr",
+    "advlist anchor autolink autosave charmap code colorpicker contextmenu emoticons fullscreen hr",
     "image importcss insertdatetime link lists media nonbreaking paste",
     "save searchreplace table textcolor visualblocks visualchars wordcount"
    ],

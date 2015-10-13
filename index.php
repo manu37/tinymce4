@@ -81,6 +81,6 @@ function tinymce4GetCdnVersion()
  */
 function tinymce4GetCdnVersions()
 {
-    return file("http://tinymce.cachefly.net/index.txt");
+    return file("http://tinymce.cachefly.net/index.txt",FILE_IGNORE_NEW_LINES);
 }
 ?>
