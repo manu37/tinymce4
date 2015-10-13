@@ -227,11 +227,11 @@ class Uploader
         $filename = $this->browseBase . $this->currentDirectory
             . basename($file['name']);
         if (file_exists($filename)) {
-            $newFilename = $this->newFilename($filename);
-            if (!rename($filename, $newFilename)) {
+            $filename = $this->newFilename($filename);  //EM~
+/* EM-            if (!rename($filename, $newFilename)) {
                 $this->errMsg['error_file_already_exists'] = $filename;
                 return;
-            }
+            }*/
         }
 
         if (move_uploaded_file($file['tmp_name'], $filename)) {
