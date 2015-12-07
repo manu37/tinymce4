@@ -40,14 +40,16 @@ EOT
     }
 }
 
-define('TINYMCE4_VARIANT', '');  //TinyMCE4 fully installed
-//define('TINYMCE4_VARIANT', 'CDN');  //TinyMCE4 externally loaded
+//define('TINYMCE4_VARIANT', '');  //TinyMCE4 fully installed
+define('TINYMCE4_VARIANT', 'CDN');  //TinyMCE4 externally loaded
 //define('TINYMCE4_VARIANT', 'jQuery');  //TinyMCE4 jQuery Version not yet realized
 
-$plugin_cf['tinymce4']['CDN_src'] 
-    = '//tinymce.cachefly.net/'.tinymce4GetCdnVersion().'/tinymce.min.js';
-$plugin_cf['tinymce4']['CDN_host'] 
-    = 'http://www.cachefly.com/';
+if (TINYMCE4_VARIANT == 'CDN') {
+    $plugin_cf['tinymce4']['CDN_src'] 
+        = '//tinymce.cachefly.net/'.tinymce4GetCdnVersion().'/tinymce.min.js';
+    $plugin_cf['tinymce4']['CDN_host'] 
+        = 'http://www.cachefly.com/';
+}
 
 /**
  * Get the CDN version from host according settings in config.
