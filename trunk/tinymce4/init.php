@@ -30,6 +30,7 @@ function tinymce4_filebrowser()
     global $cf, $edit;
 
     if (!(XH_ADM && $edit)) {   // no filebrowser, if editor is called from front-end
+        $_SESSION['tinymce_fb_callback'] = ''; // suppress filebrowsercall
         return '';
     }
 
