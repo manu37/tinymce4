@@ -10,7 +10,7 @@
     "save searchreplace table textcolor visualblocks visualchars wordcount"
   ],
   toolbar1: "save | fullscreen code formatselect fontselect fontsizeselect styleselect",
-  toolbar2: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify cut copy paste pastetext | bullist numlist outdent indent blockquote",
+  toolbar2: "bold italic underline strikethrough removeformat | alignleft aligncenter alignright alignjustify cut copy paste pastetext | bullist numlist outdent indent blockquote",
   toolbar3: "undo redo | link unlink anchor image media | hr nonbreaking removeformat visualblocks visualchars | forecolor backcolor | searchreplace | charmap",
   toolbar4: "emoticons subscript superscript | table inserttime help",
   image_advtab: true,
