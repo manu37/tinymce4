@@ -46,35 +46,9 @@ define('TINYMCE4_VARIANT', 'CDN');  //TinyMCE4 externally loaded
 
 if (TINYMCE4_VARIANT == 'CDN') {
     $plugin_cf['tinymce4']['CDN_src'] 
-        = '//tinymce.cachefly.net/'.tinymce4GetCdnVersion().'/tinymce.min.js';
-    $plugin_cf['tinymce4']['CDN_host'] 
-        = 'http://www.cachefly.com/';
+            = '//cdn.tinymce.com/4/tinymce.min.js';
 }
 
-/**
- * Get the CDN version from host according settings in config.
- * Not fully deployed yet. Just prepared to read the desired version 
- * out from config.
- *
- * @global array  plugin_cf
- * @return string latest version
- */
-function tinymce4GetCdnVersion()
-{
-    global $plugin_cf;
-    $std = '4.0';
-    if ($plugin_cf['tinymce4']['CDN_version'] == 'latest') {
-        $_ArrCdnVersions = tinymce4GetCdnVersions();
-        if (!$x = end($_ArrCdnVersions)) {
-            $x = $std;        
-        }
-    } else {
-        $x = !empty($plugin_cf['tinymce4']['CDN_version']) ? 
-            $plugin_cf['tinymce4']['CDN_version'] : 
-            $std;
-    }
-    return $x;
-}
 
 /**
  * Returns all available CDN versions.
