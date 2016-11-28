@@ -66,17 +66,6 @@ if ($tinymce4) {
         }
         return $options;
     }
-    
-
-    /**
-     * Returns all available CDN option prepared for options field.
-     *
-     * @return array options
-     */
-    function tinymce_listCdnVersions() 
-    {
-        return array_merge(tinymce4GetCdnVersions(), array('latest'));
-    }
 
     initvar('admin');
     initvar('action');
@@ -114,11 +103,6 @@ if ($tinymce4) {
         $o .= 'version ' . $tinymce_version . 
             '  &ndash; <a href="http://www.tinymce.com/" ' . 
             'target="_blank">www.tinymce.com/</a>';
-        if (TINYMCE4_VARIANT == 'CDN' ) {
-            $o .= tag('br');
-            $o .= 'hosted by <a href="http://www.cachefly.com//"
-            target="_blank">http://www.cachefly.com/</a>';
-        }
         $o .= tag('br');
         $o .= 'Available language packs: cs, da, de, en, et, fr, it, nl, pl, ';
         $o .= 'ru, sk tw, zh.</p>';
