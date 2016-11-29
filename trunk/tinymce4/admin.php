@@ -83,7 +83,7 @@ if ($tinymce4) {
         
     if ($admin == '' || $admin == 'plugin_main') {
         if (TINYMCE4_VARIANT == 'CDN' ) {
-            $tiny_src = $plugin_cf['tinymce4']['CDN_src'];
+            $tiny_src = empty($plugin_cf['tinymce4']['CDN_alt_src']) ? TINYMCE4_CDN_ORIG : $plugin_cf['tinymce4']['CDN_alt_src'];
         } else {
             $tiny_src = $pth['folder']['plugins'] . 
                 'tinymce4/' . 'tinymce/tinymce.min.js';
