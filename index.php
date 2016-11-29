@@ -42,13 +42,8 @@ EOT
 
 //define('TINYMCE4_VARIANT', '');  //TinyMCE4 fully installed
 define('TINYMCE4_VARIANT', 'CDN');  //TinyMCE4 externally loaded
+define('TINYMCE4_CDN_ORIG', '//cdn.tinymce.com/4/tinymce.min.js');  //TinyMCE4 externally loaded
 //define('TINYMCE4_VARIANT', 'jQuery');  //TinyMCE4 jQuery Version not yet realized
-
-if (TINYMCE4_VARIANT == 'CDN') {
-    $plugin_cf['tinymce4']['CDN_src'] 
-            = '//cdn.tinymce.com/4/tinymce.min.js';
-}
-
 
 /**
  * Returns all available CDN versions.
