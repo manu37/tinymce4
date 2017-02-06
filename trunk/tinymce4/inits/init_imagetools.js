@@ -32,24 +32,6 @@
   images_upload_url : "./?filebrowser=imageuploader&editor=tinymce4",
 //  images_upload_base_path :"",
   images_upload_credentials: true,
-  save_onsavecallback: function() {
-    var editor = tinymce.activeEditor;
-    editor.uploadImages(function(success) {
-      formObj = tinymce.DOM.getParent(editor.id, 'form');
-      if (formObj) {
-        editor.isNotDirty = true;
-        if (!formObj.onsubmit || formObj.onsubmit()) {
-          if (typeof formObj.submit == "function") {
-            formObj.submit();
-          } else {
-            editor.windowManager.alert("Error: Form submit field collision.");
-          }
-        }
-//        editor.nodeChanged();
-      } else {
-        editor.windowManager.alert("Error: No form element found.");
-      }
-//      console.log("Uploaded images and posted content as an ajax request.");
-    });
-  }
+  automatic_uploads: true,
+  images_reuse_filename: false
  }
