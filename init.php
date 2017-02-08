@@ -29,7 +29,7 @@ function tinymce4_filebrowser()
 {
     global $cf, $edit;
 
-    if (!(XH_ADM && $edit)) {   // no filebrowser, if editor is called from front-end
+    if (!XH_ADM) {   // no filebrowser, if editor is called from front-end
         $_SESSION['tinymce_fb_callback'] = ''; // suppress filebrowsercall
         return '';
     }
@@ -104,7 +104,7 @@ function include_tinymce4()
             'tinymce/tinymce.min.js';
     }
     
-    if (XH_ADM && $edit) {
+    if (XH_ADM) {
         include_once $pth['folder']['plugins'] . 'tinymce4/' . 'links.php';
         $imageList = 'myImageList = ' .
             get_images($pth['folder']['images']) .
