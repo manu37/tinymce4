@@ -252,7 +252,8 @@ function tinymce4_config($xh_editor, $config, $selector)
         ), $temp
     );
 
-    $temp = str_replace('%SELECTOR%', $xh_editor? 'textarea#text': $selector, $temp);
+//    $temp = str_replace('%SELECTOR%', $xh_editor? 'textarea#text': $selector, $temp);
+    $temp = str_replace('%SELECTOR%', empty($selector)? 'textarea#text': $selector, $temp);
     
     $temp = str_replace(
         '"%FILEBROWSER_CALLBACK%"', 
