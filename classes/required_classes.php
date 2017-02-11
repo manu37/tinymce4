@@ -14,6 +14,12 @@
  * @link      http://3-magi.net/?CMSimple_XH/Onepage_XH
  */
 
+
+//define('TINYMCE4_VARIANT', '');  //TinyMCE4 fully installed
+define('TINYMCE4_VARIANT', 'CDN');  //TinyMCE4 externally loaded
+define('TINYMCE4_CDN_ORIG', '//cdn.tinymce.com/4/tinymce.min.js');  //TinyMCE4 externally loaded
+//define('TINYMCE4_VARIANT', 'jQuery');  //TinyMCE4 jQuery Version not yet realized 
+
 /**
  * Autoloads the plugin classes.
  *

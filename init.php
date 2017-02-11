@@ -29,7 +29,7 @@ function tinymce4_filebrowser()
 {
     global $cf, $edit;
 
-    if (!(XH_ADM && $edit)) {   // no filebrowser, if editor is called from front-end
+    if (!XH_ADM) {   // no filebrowser, if editor is called from front-end
         $_SESSION['tinymce_fb_callback'] = ''; // suppress filebrowsercall
         return '';
     }
@@ -104,7 +104,7 @@ function include_tinymce4()
             'tinymce/tinymce.min.js';
     }
     
-    if (XH_ADM && $edit) {
+    if (XH_ADM) {
         include_once $pth['folder']['plugins'] . 'tinymce4/' . 'links.php';
         $imageList = 'myImageList = ' .
             get_images($pth['folder']['images']) .
@@ -139,13 +139,12 @@ function include_tinymce4()
 /**
  * Returns the config object.
  *
- * @param string $xh_editor editor URL.
  * @param string $config    manual config string.
  * @param string $selector  manual manual editor DOM node.
  *
  * @return string editor config
  */
-function tinymce4_config($xh_editor, $config, $selector)
+function tinymce4_config($config, $selector)
 {
     global $cl, $pth, $sl, $cf, $plugin_cf, $plugin_tx, $s;
 
@@ -252,11 +251,11 @@ function tinymce4_config($xh_editor, $config, $selector)
         ), $temp
     );
 
-    $temp = str_replace('%SELECTOR%', $xh_editor? 'textarea#text': $selector, $temp);
+    $temp = str_replace('%SELECTOR%', $selector, $temp);
     
     $temp = str_replace(
         '"%FILEBROWSER_CALLBACK%"', 
-        $xh_editor ? 
+        XH_ADM ? 
         $_SESSION['tinymce_fb_callback'] : 
         '""', 
         $temp
@@ -288,7 +287,7 @@ function tinymce4_replace($elementID = false, $config = '')
     if (!$elementID) {
         return '';
     }
-    $config = tinymce4_config(false, $config, '#' . $elementID);
+    $config = tinymce4_config($config, '#' . $elementID);
    
     return _setInit($config);
 }
@@ -311,12 +310,12 @@ function init_tinymce4($classes = array(), $config = false)
 
     include_tinymce4();
     
-    $initClasses = 'xh-editor';
+    $initClasses = '.xh-editor';
     if (is_array($classes) && (bool) $classes) {
         $initClasses = '.' . implode(',.', $classes);
     }
     
-    $temp = tinymce4_config($initClasses == 'xh-editor', $config, $initClasses);
+    $temp = tinymce4_config($config, $initClasses);
 
     $hjs .= '
 	<script language="javascript" type="text/javascript">
