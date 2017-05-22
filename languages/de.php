@@ -2,7 +2,7 @@
 
 $plugin_tx['tinymce4']['cf_init']="Der Umfang der Toolbar";
 $plugin_tx['tinymce4']['cf_utf-8_marker']="<p>Internal usage. <strong>Do not change!</strong></p>";
-$plugin_tx['tinymce4']['cf_CDN_alt_src']="alternative CDN Quelle.<br>Ex.<strong>./plugins/tinymce4/tinymce/tinymce.min.js</strong>";
+$plugin_tx['tinymce4']['cf_CDN_alt_src']="alternative CDN Quelle";
 $plugin_tx['tinymce4']['pageheader']="%s. Ebene Seitenkopf";
 
 ?>
