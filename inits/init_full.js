@@ -6,7 +6,7 @@
   menubar:false,
   plugins: [
     "advlist anchor autolink autosave charmap code colorpicker contextmenu emoticons fullscreen  help hr",
-    "image importcss insertdatetime link lists media nonbreaking paste",
+    "image importcss insertdatetime link lists media nonbreaking noneditable paste",
     "save searchreplace table textcolor visualblocks visualchars wordcount xhplugincall"
   ],
   toolbar1: "save | fullscreen code formatselect fontselect fontsizeselect styleselect",
@@ -27,5 +27,6 @@
   "insertdatetime_formats": ["%H:%M:%S", "%d.%m.%Y", "%I:%M:%S %p", "%D"],
   relative_urls: true,
   convert_urls: false,
-  entity_encoding: "raw"
+  entity_encoding: "raw",
+  noneditable_noneditable_class: 'mceNonEditable'
  }
