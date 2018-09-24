@@ -1,4 +1,4 @@
 tinymce.addI18n('de',{
-"Insert a XH plugin call": "Vložit příkaz XH pluginu",
-"Paste/modify the XH plugin call here - without {{{}}}": "Vložte sem příkaz XH pluginu - bez {{{}}}"
+"Insert/edit a XH plugin call": "Vložit/upravit příkaz XH pluginu",
+"Insert/edit the XH plugin call here - without {{{}}}": "Zde vložit/upravit příkaz pluginu - bez {{{}}}"
 });
