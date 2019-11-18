@@ -31,5 +31,10 @@
   convert_urls: false,
   entity_encoding: "raw",
   noneditable_noneditable_class: 'fa',
-  extended_valid_elements: 'span[*]'
+  extended_valid_elements: 'span[*]',
+  codemirror:{
+    config: {
+      theme: 'zenburn'
+    }
+  }
 }
